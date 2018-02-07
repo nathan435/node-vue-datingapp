@@ -32,7 +32,7 @@ const uploadImage = async (img, name) => {
     console.log(uploadResult);
 }
 
-const uploadProfileImage = async (img, userId) => {
+const cloudinaryUploadProfileImage = async (img, userId) => {
     // upload img as <userid>_profile in DatingApp/profiles/<userid>/
     const uploadResult = await cloudinary.v2.uploader.upload(
         img,
@@ -44,7 +44,7 @@ const uploadProfileImage = async (img, userId) => {
     )
 }
 
-const uploadGalleryImage = async (img, userId) => {
+const cloudinaryUploadGalleryImage = async (img, userId) => {
     // upload img as random id
     const uploadResult = await cloudinary.v2.uploader.upload(
         img,
@@ -58,7 +58,7 @@ const uploadGalleryImage = async (img, userId) => {
     return uploadResult;
 }
 
-const getUserGalleryImages = async (userId) => {
+const cloudinaryGetUserGalleryImages = async (userId) => {
     const fetchResult = await cloudinary.v2.api.resources({
         type: 'upload',
         prefix: `DatingApp/profiles/${userId}/gallery`
@@ -67,13 +67,19 @@ const getUserGalleryImages = async (userId) => {
     return fetchResult;
 }
 
-const getUserProfileImagePath = (userId) => {
+const cloudinaryGetUserProfileImagePath = (userId) => {
     return `https://res.cloudinary.com/dh54dr3k9/image/upload/v1517952820/DatingApp/profiles/${userId}/${userId}_profile`;
 }
 
+const cloudinaryDeleteImageById = (imageId) => {
+    const deleteResult = await cloudinary.v2.api.uploader.destroy(imageId);
+    return deleteResult;
+}
+
 module.exports = {
-    uploadProfileImage,
-    uploadGalleryImage,
-    getUserGalleryImages,
-    getUserProfileImagePath
+    cloudinaryUploadProfileImage,
+    cloudinaryUploadGalleryImage,
+    cloudinaryGetUserGalleryImages,
+    cloudinaryGetUserProfileImagePath,
+    cloudinaryDeleteImageById
 }

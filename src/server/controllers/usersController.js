@@ -1,5 +1,11 @@
 const User = require('../database/models/User');
-
+const {
+    cloudinaryUploadProfileImage,
+    cloudinaryUploadGalleryImage,
+    cloudinaryGetUserGalleryImages,
+    cloudinaryGetUserProfileImagePath,
+    cloudinaryDeleteImageById  
+} = require('../api/services/cloudinary')
 
 const createUser = async (data) => {
     // create the user in database
@@ -200,12 +206,42 @@ const handleProfileVisit = async (data) => {
     }
 }
 
-const uploadProfilePicture = async (data) => {
+const uploadProfileImage = async (data) => {
     const {
-        image
+        image,
+        userId
     } = data;
 
-    
+    const cloudinaryResult = await cloudinaryUploadProfileImage(image, userId);
+    return cloudinaryResult;
+}
+
+const uploadGalleryImage = async (data) => {
+    const {
+        image,
+        userId
+    } = data;
+
+    const cloudinaryResult = await cloudinaryUploadGalleryImage(image, userId);
+    return cloudinaryResult;
+}
+
+const getGalleryImages = async (data) => {
+    const {
+        userId
+    } = data;
+
+    const cloudinaryResult = await cloudinaryGetUserGalleryImages(userId);
+    return cloudinaryResult;
+}
+
+const deleteGalleryImage = async (data) => {
+    const {
+        imageId
+    } = data;
+
+    const cloudinaryResult = await cloudinaryDeleteImageById(imageId);
+    return cloudinaryResult;
 }
 
 
@@ -223,5 +259,9 @@ module.exports = {
     handleProfileVisit,
     frontendGetAllUsers,
     frontendGetUserWithProfile,
-    frontendGetUserSelf
+    frontendGetUserSelf,
+    uploadProfileImage,
+    uploadGalleryImage,
+    getGalleryImages,
+    deleteGalleryImage
 }
