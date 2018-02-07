@@ -1,0 +1,22 @@
+
+
+.dropdown-item {
+    outline: none !important;
+}
+
+
+#nprogress {
+
+    .bar {
+        background: $brand-primary !important;
+    }
+
+    .peg {
+        box-shadow: 0 0 10px $brand-primary, 0 0 5px $brand-primary !important;
+    }
+
+    .spinner-icon {
+        border-top-color: $brand-primary !important;
+        border-left-color: $brand-primary !important;
+    }
+}
