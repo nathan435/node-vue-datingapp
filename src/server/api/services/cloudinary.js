@@ -71,7 +71,7 @@ const cloudinaryGetUserProfileImagePath = (userId) => {
     return `https://res.cloudinary.com/dh54dr3k9/image/upload/v1517952820/DatingApp/profiles/${userId}/${userId}_profile`;
 }
 
-const cloudinaryDeleteImageById = (imageId) => {
+const cloudinaryDeleteImageById = async (imageId) => {
     const deleteResult = await cloudinary.v2.api.uploader.destroy(imageId);
     return deleteResult;
 }
