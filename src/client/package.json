@@ -16,6 +16,7 @@
     "bootstrap-vue": "^2.0.0-rc.0",
     "cookies-js": "^1.2.3",
     "lodash": "^4.17.4",
+    "moment": "^2.20.1",
     "nprogress": "^0.2.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

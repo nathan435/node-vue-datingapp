@@ -182,8 +182,6 @@ async (req, res) => {
         console.log(e);
         return res.json({});
     }
-
 })
-
 
 module.exports = usersRouter;
