@@ -1,6 +1,6 @@
 const { mongoose } = require('../index');
 const bcrypt = require('bcrypt');
-const { getUserProfileImagePath } = require('../../api/services/cloudinary');
+const { cloudinaryGetUserProfileImagePath } = require('../../api/services/cloudinary');
 
 const userSchema = mongoose.Schema({
     email: {
@@ -51,7 +51,6 @@ userSchema.pre('save', async function(next) {
     const user = this;
     if (!this.isModified('password') && !this.isNew) return next();
     try {
-        console.log('user', user);
         const hash = await bcrypt.hash(user.password, 10);
         user.password = hash;
         return next();
@@ -79,7 +78,7 @@ userSchema.methods.toFrontendRepresentation = function() {
         email: this.email,
         username: this.username,
         role: this.role,
-        profileImage: getUserProfileImagePath(this._id)
+        profileImage: cloudinaryGetUserProfileImagePath(this._id)
     }
 }
 
@@ -90,7 +89,7 @@ userSchema.methods.toFrontendDetailRepresentation = function() {
         username: this.username,
         role: this.role,
         profile: this.profile,
-        profileImage: getUserProfileImagePath(this._id)
+        profileImage: cloudinaryGetUserProfileImagePath(this._id)
     }
 }
 
@@ -103,7 +102,7 @@ userSchema.methods.toFrontendOwnerRepresentation = function() {
         profile: this.profile,
         likes: this.likes,
         visitors: this.visitors,
-        profileImage: getUserProfileImagePath(this._id)
+        profileImage: cloudinaryGetUserProfileImagePath(this._id)
     }
 }
 

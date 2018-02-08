@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:server": "nodemon src/server/server"
+    "dev:server": "nodemon src/server/server",
+    "migrate:users": "node src/server/database/migrations/exampleUsers"
   },
   "keywords": [],
   "author": "",
