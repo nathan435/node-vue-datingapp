@@ -192,18 +192,14 @@ async (req, res) => {
 
 // Upload profile image
 usersRouter.post('/users/upload/profile', [
-    isAuthenticatedUser,
-    upload.single('image'),
-    cloudinaryUpload
+    isAuthenticatedUser
 ],
 async (req, res) => {
     try {
-        const image = req.file;
-        console.log(req.file.buffer);
-        console.log(image);
+        const image = req.body.image;
 
-        //const updatedUser = await uploadProfileImage({ image, userId: req.user.id });
-        //if (!updatedUser) throw new Error();
+        const updatedUser = await uploadProfileImage({ image, userId: req.user.id });
+        if (!updatedUser) throw new Error();
         return res.json({
             user: updatedUser.toFrontendOwnerRepresentation()
         })

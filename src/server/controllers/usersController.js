@@ -216,7 +216,7 @@ const uploadProfileImage = async (data) => {
         const user = await getUserByID(userId);
         const cloudinaryResult = await cloudinaryUploadProfileImage(image, userId);
 
-        user.profileImage = cloudinaryGetUserProfileImagePath(userId);
+        user.profile.profileImage = cloudinaryGetUserProfileImagePath(userId);
         const savedUser = await user.save();
 
         return savedUser;

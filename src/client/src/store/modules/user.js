@@ -43,7 +43,8 @@ const actions = {
     },
     async uploadProfilePicture ({ commit, state }, imageFile) {
         try {
-            const user = UserApi.updateProfilePicture(imageFile);
+            // encode the file
+            const user = await UserApi.updateProfilePicture(imageFile);
             if (!user || !user.profileImage) throw new Error();
 
             commit(types.UPLOAD_PROFILE_PICTURE_SUCCESS, { user });

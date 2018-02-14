@@ -43,7 +43,8 @@ const userSchema = mongoose.Schema({
         gender: String,
         gendersInterestedIn: Array,
         geolocation: Array,
-        distanceInterestedIn: Number
+        distanceInterestedIn: Number,
+        profileImage: String
     }
 });
 
@@ -78,7 +79,7 @@ userSchema.methods.toFrontendRepresentation = function() {
         email: this.email,
         username: this.username,
         role: this.role,
-        profileImage: this.profileImage
+        profileImage: this.profile.profileImage
     }
 }
 
@@ -89,7 +90,7 @@ userSchema.methods.toFrontendDetailRepresentation = function() {
         username: this.username,
         role: this.role,
         profile: this.profile,
-        profileImage: this.profileImage
+        profileImage: this.profile.profileImage
     }
 }
 
@@ -102,7 +103,7 @@ userSchema.methods.toFrontendOwnerRepresentation = function() {
         profile: this.profile,
         likes: this.likes,
         visitors: this.visitors,
-        profileImage: this.profileImage
+        profileImage: this.profile.profileImage
     }
 }
 

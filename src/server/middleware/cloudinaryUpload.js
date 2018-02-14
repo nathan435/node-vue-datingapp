@@ -6,7 +6,7 @@ function cloudinaryUpload(req, res, next) {
 
     // validate stuff ?
 
-    console.log('file', req.file);
+    return next();
 
     cloudinary.uploader.upload_stream((result) => {
         req.result = result;
