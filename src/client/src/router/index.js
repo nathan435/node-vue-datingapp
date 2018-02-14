@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/routes/Main/Main'
 import Login from '@/components/routes/Login/Login'
+import Signup from '@/components/routes/Signup/Signup'
 
 import UsersBrowser from '@/components/routes/Main/UsersBrowser/UsersBrowser'
 import EditProfile from '@/components/routes/Main/EditProfile/EditProfile'
@@ -41,6 +42,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/join',
+      name: 'Signup',
+      component: Signup
     }
   ]
 })

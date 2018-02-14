@@ -9,8 +9,8 @@ const applyMiddleware = (app) => {
     // Cross Origin Ressource CORS
     app.use(cors());
     // parse application/x-www-form-urlencoded
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
+    app.use(bodyParser.json({ limit: '5mb' }));
     // passport for auth
     app.use(passport.initialize());
     app.use(parseAuthToken);

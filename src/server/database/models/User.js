@@ -78,7 +78,7 @@ userSchema.methods.toFrontendRepresentation = function() {
         email: this.email,
         username: this.username,
         role: this.role,
-        profileImage: cloudinaryGetUserProfileImagePath(this._id)
+        profileImage: this.profileImage
     }
 }
 
@@ -89,7 +89,7 @@ userSchema.methods.toFrontendDetailRepresentation = function() {
         username: this.username,
         role: this.role,
         profile: this.profile,
-        profileImage: cloudinaryGetUserProfileImagePath(this._id)
+        profileImage: this.profileImage
     }
 }
 
@@ -102,7 +102,7 @@ userSchema.methods.toFrontendOwnerRepresentation = function() {
         profile: this.profile,
         likes: this.likes,
         visitors: this.visitors,
-        profileImage: cloudinaryGetUserProfileImagePath(this._id)
+        profileImage: this.profileImage
     }
 }
 

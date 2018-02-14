@@ -212,8 +212,18 @@ const uploadProfileImage = async (data) => {
         userId
     } = data;
 
-    const cloudinaryResult = await cloudinaryUploadProfileImage(image, userId);
-    return cloudinaryResult;
+    try {
+        const user = await getUserByID(userId);
+        const cloudinaryResult = await cloudinaryUploadProfileImage(image, userId);
+
+        user.profileImage = cloudinaryGetUserProfileImagePath(userId);
+        const savedUser = await user.save();
+
+        return savedUser;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
 }
 
 const uploadGalleryImage = async (data) => {

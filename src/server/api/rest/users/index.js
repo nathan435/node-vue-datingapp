@@ -5,7 +5,12 @@ const { matchedData, sanitize } = require('express-validator/filter');
 const passport = require('../../../middleware/passport');
 const isAdmin = require('../../../middleware/isAdmin');
 const isAuthenticatedUser = require('../../../middleware/isAuthenticatedUser');
+const cloudinaryUpload = require('../../../middleware/cloudinaryUpload');
 const configData = require('../../../config/data');
+
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage, limits: { fieldSize: 25 * 1024 * 1024}});
 
 const usersRouter = express();
 
@@ -21,7 +26,8 @@ const {
     frontendGetAllUsers,
     frontendGetUserWithProfile,
     frontendGetUserSelf,
-    handleProfileVisit
+    handleProfileVisit,
+    uploadProfileImage
 } = require('../../../controllers/usersController');
 
 
@@ -180,6 +186,30 @@ async (req, res) => {
     } catch (e) {
         if (e.mapped) return res.json({ errors: e.mapped() });
         console.log(e);
+        return res.json({});
+    }
+})
+
+// Upload profile image
+usersRouter.post('/users/upload/profile', [
+    isAuthenticatedUser,
+    upload.single('image'),
+    cloudinaryUpload
+],
+async (req, res) => {
+    try {
+        const image = req.file;
+        console.log(req.file.buffer);
+        console.log(image);
+
+        //const updatedUser = await uploadProfileImage({ image, userId: req.user.id });
+        //if (!updatedUser) throw new Error();
+        return res.json({
+            user: updatedUser.toFrontendOwnerRepresentation()
+        })
+    } catch (e) {
+        console.log(e);
+        if (e.mapped) return res.json({ errors: e.mapped() });
         return res.json({});
     }
 })

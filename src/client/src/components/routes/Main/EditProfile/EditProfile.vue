@@ -3,7 +3,7 @@
         <h2>Dein Profil</h2>
         <router-link :to="{ name: 'ProfilePreview'}" class="preview-link">Profilvorschau anzeigen</router-link>
         <b-row>
-            <b-col cols="6" offset="3">
+            <b-col cols="8" offset="2">
                 <b-container>
                     <b-row class="first-formgroup align-items-center">
                         <b-col cols="4">
@@ -183,22 +183,22 @@ export default {
     .username-forminput {
         margin-left: 10px;
         margin-right: 5px;
-        width: 200px;
+        width: auto;
     }
 
     .gender-forminput {
         margin-left: 10px;
         margin-right: 5px;
-        width: 200px;
+        width: auto;
     }
 
     .age-forminput {
-        width: 70px;
+        width: auto;
         margin-right: 5px;
     }
 
     .location-forminput {
-        width: 200px;
+        width: auto;
         margin-left: 10px;
         margin-right: 5px;
     }

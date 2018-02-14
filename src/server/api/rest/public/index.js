@@ -5,7 +5,8 @@ const { matchedData, sanitize } = require('express-validator/filter');
 
 const {
     googleMapsGetGeolocationFromInput,
-    googleMapsGetGeolocationFromCoordinates
+    googleMapsGetGeolocationFromCoordinates,
+    getCityFromGoogleResults
 } = require('../../services/googleMaps');
 
 const publicRouter = express();
@@ -18,11 +19,12 @@ publicRouter.get('/public/geolocation/input', [
         const data = matchedData(req);
 
         const googleResult = await googleMapsGetGeolocationFromInput(data.input);
-        console.log(googleResult);
+        console.log(googleResult.address_components);
         return res.json({
             geolocation: {
                 formattedAddress: googleResult.formatted_address,
-                coordinates: googleResult.geometry.location
+                coordinates: googleResult.geometry.location,
+                city: getCityFromGoogleResults(googleResult)
             }
         });
     } catch (e) {
@@ -48,7 +50,8 @@ publicRouter.get('/public/geolocation/coordinates', [
                 coordinates: {
                     lat: data.lat,
                     lng: data.lng
-                }
+                },
+                city: getCityFromGoogleResults(googleResult)
             }
         });
     } catch (e) {

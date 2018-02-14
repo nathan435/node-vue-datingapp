@@ -41,6 +41,17 @@ const actions = {
         // inform api about logout
         commit(types.LOGOUT);
     },
+    async uploadProfilePicture ({ commit, state }, imageFile) {
+        try {
+            const user = UserApi.updateProfilePicture(imageFile);
+            if (!user || !user.profileImage) throw new Error();
+
+            commit(types.UPLOAD_PROFILE_PICTURE_SUCCESS, { user });
+        } catch (e) {
+            console.log(e);
+        }
+
+    },
     async submitProfileUpdate({ commit }, formData) {
         const updateResult = await UserApi.updateOwnProfile(formData);
         const user = updateResult.data.user;
@@ -62,6 +73,10 @@ const mutations = {
         state.account = null;
         Cookies.expire('authToken');
         // clear cookies/localstorage
+    },
+    [types.UPLOAD_PROFILE_PICTURE_SUCCESS] (state, { user }) {
+        console.log(user);
+        state.account = user;
     }
 }
 

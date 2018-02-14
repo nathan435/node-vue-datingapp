@@ -14,8 +14,8 @@ const tryLogin = (credentials) => {
     })
 }
 
-const signup = () => {
-
+const signup = (formData) => {
+    return api.post('/signup', formData);
 }
 
 

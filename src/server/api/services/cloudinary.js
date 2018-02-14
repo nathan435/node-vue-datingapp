@@ -42,6 +42,7 @@ const cloudinaryUploadProfileImage = async (img, userId) => {
             folder: `DatingApp/profiles/${userId}/`
         }
     )
+    return uploadResult;
 }
 
 const cloudinaryUploadGalleryImage = async (img, userId) => {
@@ -81,5 +82,6 @@ module.exports = {
     cloudinaryUploadGalleryImage,
     cloudinaryGetUserGalleryImages,
     cloudinaryGetUserProfileImagePath,
-    cloudinaryDeleteImageById
+    cloudinaryDeleteImageById,
+    cloudinary
 }

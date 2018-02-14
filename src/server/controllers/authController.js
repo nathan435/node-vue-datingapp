@@ -29,14 +29,19 @@ const tryLogin = async (data) => {
         };
 
     } catch (e) {
+        console.log('ERRORORORORO')
         console.log(e);
         return e;
     }
 }
 
 const signup = async (data) => {
-    const user = await createUser(data);
-    return user;
+    await createUser(data);
+    const { user, token } = await tryLogin(data);
+    return {
+        user,
+        token
+    };
 }
 
 const setRole = async (data) => {

@@ -7,7 +7,7 @@
                       spellcheck="false"
                       v-model="form.email"
                       required
-                      placeholder="Your email">
+                      placeholder="Deine Email">
         </b-form-input>
       </b-form-group>
         <b-form-group>
@@ -15,10 +15,10 @@
                       type="password"
                       v-model="form.password"
                       required
-                      placeholder="Your password">
+                      placeholder="Dein Passwort">
         </b-form-input>
       </b-form-group>
-      <b-button type="submit" variant="primary">Login</b-button>
+      <b-button type="submit" variant="primary">Einloggen</b-button>
     </b-form>
   </b-card>
 </template>
@@ -73,6 +73,7 @@ export default {
     width: 500px;
     margin: 0 auto;
     margin-top: 100px;
+    border: none;
 }
 
 </style>
