@@ -20,6 +20,7 @@
                 <em>{{user.username}}</em>
             </template>
             <b-dropdown-item :to="{ name: 'EditProfile' }">Profil</b-dropdown-item>
+            <b-dropdown-item @click="openChat">Chat</b-dropdown-item>
             <b-dropdown-item @click="logOut">Ausloggen</b-dropdown-item>
             </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -40,7 +41,8 @@ export default {
     },
     methods: {
         ...mapActions([
-            'logOut'
+            'logOut',
+            'openChat'
         ])
     }
 }

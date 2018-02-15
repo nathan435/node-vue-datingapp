@@ -1,6 +1,5 @@
 <template>
-    <b-modal size="lg" :visible="visible" @hide="closeModal" hide-footer hide-header no-fade>
-        Hello
+    <b-modal size="lg" class="chat-modal" :visible="visible" @hide="closeModal" hide-footer hide-header no-fade>
         <Chat></Chat>
     </b-modal>
 </template>

@@ -1,16 +1,18 @@
 <template>
-    <b-modal :visible="visible" @hide="closeModal" hide-footer hide-header :no-fade="isChatOpen">
-        <h1 v-if="profileOwner">{{profileOwner.username}}</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque asperiores reiciendis ipsa, cumque quia ad mollitia dolorum eos corrupti enim quasi laboriosam sit tenetur laborum quae sunt quas, fugiat soluta.</p>
-        <template v-if="!isPreviewMode">
-            <b-button variant="primary" @click="openChat(profileOwner)">Chat</b-button>
-            <b-button v-if="isLikedUser" variant="outline-primary" @click="likeUser(profileOwner)">Dir gefällt {{profileOwner.username}}</b-button>
-            <b-button v-else variant="primary" @click="likeUser(profileOwner)">Like</b-button>
-        </template>
-        <template v-else>
-            <b-button>Chat</b-button>
-            <b-button variant="outline-secondary">Like</b-button>
-        </template>
+    <b-modal :visible="visible" @hide="closeModal" hide-footer hide-header :no-fade="isChatOpen" class="profile-modal">
+        <div class="modal-inner">
+            <h1 v-if="profileOwner">{{profileOwner.username}}</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque asperiores reiciendis ipsa, cumque quia ad mollitia dolorum eos corrupti enim quasi laboriosam sit tenetur laborum quae sunt quas, fugiat soluta.</p>
+            <template v-if="!isPreviewMode">
+                <b-button variant="primary" @click="openChat(profileOwner)">Chat</b-button>
+                <b-button v-if="isLikedUser" variant="outline-primary" @click="likeUser(profileOwner)">Dir gefällt {{profileOwner.username}}</b-button>
+                <b-button v-else variant="primary" @click="likeUser(profileOwner)">Like</b-button>
+            </template>
+            <template v-else>
+                <b-button>Chat</b-button>
+                <b-button variant="outline-secondary">Like</b-button>
+            </template>
+        </div>
     </b-modal>
 </template>
 
