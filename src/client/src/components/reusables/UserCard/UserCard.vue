@@ -1,6 +1,6 @@
 <template>
   <div class="user-card" @click="visitUser(user.id)">
-      <img src="https://www.dandad.org/static/images/placeholder-860x587.png" alt="">
+      <img :src="profileImage" alt="">
   </div>
 </template>
 
@@ -15,6 +15,12 @@ export default {
         ...mapActions([
             'visitUser'
         ])
+    },
+    computed: {
+        profileImage() {
+            if (this.user.profileImage) return this.user.profileImage;
+            return 'https://www.dandad.org/static/images/placeholder-860x587.png';
+        }
     }
 }
 </script>
@@ -23,12 +29,15 @@ export default {
 <style scoped lang="scss">
 
 .user-card {
-
+    height: 200px;
     margin-bottom: 10px;
     margin-top: 10px;
 
     img {
         max-width: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 </style>

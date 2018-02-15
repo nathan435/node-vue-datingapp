@@ -192,7 +192,8 @@ async (req, res) => {
 
 // Upload profile image
 usersRouter.post('/users/upload/profile', [
-    isAuthenticatedUser
+    isAuthenticatedUser,
+    upload.single('image')
 ],
 async (req, res) => {
     try {

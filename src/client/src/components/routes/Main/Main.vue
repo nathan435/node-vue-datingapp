@@ -48,14 +48,14 @@ export default {
     }
   },
   created() {
-    if (!this.isLoggedIn && !this.hasAuthToken) this.$router.replace({ path: 'ciao' });
+    if (!this.isLoggedIn && !this.hasAuthToken) this.$router.replace({ path: 'login' });
     // load users data
     this.$store.dispatch('getUsersList');
     console.log(this.$route);
   },
   watch: {
     isLoggedIn() {
-        if (!this.isLoggedIn) this.$router.replace({ path: 'ciao' });
+        if (!this.isLoggedIn) this.$router.replace({ path: 'login' });
     }
 },
 }

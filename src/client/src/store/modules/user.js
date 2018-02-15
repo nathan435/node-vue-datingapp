@@ -21,12 +21,14 @@ const getters = {
 }
 
 const actions = {
-    getAuthenticatedUser ({ commit }) {
-        UserApi.getAuthenticatedUser()
-        .then((result) => {
-            commit(types.RECEIVE_AUTHENTICATED_USER, { user: result.data.user })
-        })
-        // fetch user from api commit RECEIVE_AUTHENTICATED_USER
+    async getAuthenticatedUser ({ commit }) {
+        try {
+            const result = await UserApi.getAuthenticatedUser();
+            if (!result.data.user) throw new Error();
+            commit(types.RECEIVE_AUTHENTICATED_USER, { user: result.data.user });
+        } catch (e) {
+            commit(types.LOGOUT);
+        }
     },
     tryLogin ({ commit, state }, credentials) {
         AuthApi.tryLogin(credentials)
@@ -44,8 +46,8 @@ const actions = {
     async uploadProfilePicture ({ commit, state }, imageFile) {
         try {
             // encode the file
-            const user = await UserApi.updateProfilePicture(imageFile);
-            if (!user || !user.profileImage) throw new Error();
+            const result = await UserApi.updateProfilePicture(imageFile);
+            if (!result.data.user || !result.user.profileImage) throw new Error();
 
             commit(types.UPLOAD_PROFILE_PICTURE_SUCCESS, { user });
         } catch (e) {
@@ -76,7 +78,7 @@ const mutations = {
         // clear cookies/localstorage
     },
     [types.UPLOAD_PROFILE_PICTURE_SUCCESS] (state, { user }) {
-        console.log(user);
+        console.log('success');
         state.account = user;
     }
 }
