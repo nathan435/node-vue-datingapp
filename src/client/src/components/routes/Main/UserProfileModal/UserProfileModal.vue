@@ -2,6 +2,7 @@
     <b-modal :visible="visible" @hide="closeModal" hide-footer hide-header :no-fade="isChatOpen" class="profile-modal">
         <div class="modal-inner">
             <h1 v-if="profileOwner">{{profileOwner.username}}</h1>
+            <b-img class="profile-image" fluid :src="profileOwner.profileImage" alt=""/>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque asperiores reiciendis ipsa, cumque quia ad mollitia dolorum eos corrupti enim quasi laboriosam sit tenetur laborum quae sunt quas, fugiat soluta.</p>
             <template v-if="!isPreviewMode">
                 <b-button variant="primary" @click="openChat(profileOwner)">Chat</b-button>
@@ -71,5 +72,14 @@ export default {
 
 
 <style scoped lang="scss">
+
+.profile-modal {
+
+    .profile-image {
+        border-radius: 3px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+}
 
 </style>
