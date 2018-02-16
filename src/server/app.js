@@ -5,9 +5,6 @@ const app = applyMiddleware(express());
 
 
 
-
-
-
 const apiRouter = require('./api/rest');
 app.use('/api', apiRouter);
 

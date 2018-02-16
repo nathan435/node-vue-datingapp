@@ -11,6 +11,8 @@ import './styles/bootstrap-4.0.0/scss/bootstrap.scss'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './styles/globals.scss'
 
+import socket from './api/realtime'
+
 
 import store from './store'
 import { log } from 'util';
