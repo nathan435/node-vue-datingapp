@@ -1,6 +1,6 @@
 <template>
     <div class="navbar-main">
-        <b-container class="navbar-container clearfix">
+        <b-container class="navbar-container clearfix" v-if="user">
             <div class="brand"></div>
             <div class="navigation-right">
                 <div class="notifications" id="notifications-popover" :style="{'pointer-events': notificationsPopoverIsShown ? 'none' : 'auto'}">
@@ -21,7 +21,7 @@
                     <img src="https://cdn1.iconfinder.com/data/icons/fs-icons-ubuntu-by-franksouza-dark/512/indicator-messages.png" alt="">
                     <div class="amount">4</div>
                 </div>
-                <div v-if="user" class="user" id="user-popover" @click="popoverBeforeShow" :style="{'pointer-events': userPopoverIsShown ? 'none' : 'auto'}">
+                <div class="user" id="user-popover" @click="popoverBeforeShow" :style="{'pointer-events': userPopoverIsShown ? 'none' : 'auto'}">
                     <img :src="user.profileImage" alt="">
                     <p>{{user.username}}</p>
                 </div>
@@ -55,8 +55,7 @@ export default {
     data() {
         return {
             userPopoverIsShown: false,
-            notificationsPopoverIsShown: false,
-            userPopoverTriggers: 'click blur'
+            notificationsPopoverIsShown: false
         }
     },
     methods: {
