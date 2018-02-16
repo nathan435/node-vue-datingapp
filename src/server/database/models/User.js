@@ -44,7 +44,10 @@ const userSchema = mongoose.Schema({
         gendersInterestedIn: Array,
         geolocation: Array,
         distanceInterestedIn: Number,
-        profileImage: String
+        profileImage: {
+            type: String,
+            default: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+        }
     }
 });
 

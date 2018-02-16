@@ -21,9 +21,9 @@
                     <img src="https://cdn1.iconfinder.com/data/icons/fs-icons-ubuntu-by-franksouza-dark/512/indicator-messages.png" alt="">
                     <div class="amount">4</div>
                 </div>
-                <div class="user" id="user-popover" @click="popoverBeforeShow" :style="{'pointer-events': userPopoverIsShown ? 'none' : 'auto'}">
-                    <img src="http://oi57.tinypic.com/162afr6.jpg" alt="">
-                    <p>Nathan</p>
+                <div v-if="user" class="user" id="user-popover" @click="popoverBeforeShow" :style="{'pointer-events': userPopoverIsShown ? 'none' : 'auto'}">
+                    <img :src="user.profileImage" alt="">
+                    <p>{{user.username}}</p>
                 </div>
                 <b-popover target="user-popover"
                     :placement="'bottom'"
