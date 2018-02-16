@@ -1,6 +1,7 @@
 <template>
   <div class="main" :class="{'modalOpen': false}">
       <NavHeader></NavHeader>
+      <Subheader></Subheader>
       <router-view />
       <UserProfileModal :visible="(isUserRoute || isProfilePreviewRoute)"></UserProfileModal>
       <ChatModal :visible="isChatOpen"></ChatModal>
@@ -9,6 +10,7 @@
 
 <script>
 import Header from '../../reusables/Header/Header.vue'
+import Subheader from '../../reusables/Subheader/Subheader.vue'
 import UserProfileModal from './UserProfileModal/UserProfileModal.vue'
 import ChatModal from './Chat/ChatModal.vue'
 import { mapGetters, mapActions } from 'vuex'
@@ -16,6 +18,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   components: {
     NavHeader: Header,
+    Subheader: Subheader,
     UserProfileModal,
     ChatModal
   },

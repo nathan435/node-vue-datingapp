@@ -20,8 +20,10 @@
     "nprogress": "^0.2.0",
     "validate.js": "^0.12.0",
     "vue": "^2.5.2",
+    "vue-carousel": "^0.6.5",
     "vue-picture-input": "^2.1.1",
     "vue-router": "^3.0.1",
+    "vue-slick": "^1.1.12",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

@@ -47,3 +47,21 @@
 .modal-inner {
     padding: 20px;
 }
+
+
+.popover {
+    margin-top: -1px !important;
+}
+
+.popover .popover-body {
+    padding: 0 !important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+    .popover-item {
+        width: 150px !important;
+        padding: 8px 10px 8px 15px !important;
+        margin: 0 !important;
+        cursor: pointer;
+        outline: none;
+    }
+}
