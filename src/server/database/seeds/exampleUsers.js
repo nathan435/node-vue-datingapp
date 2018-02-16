@@ -54,7 +54,7 @@ const exampleUsers = [
     }
 ]
 
-const runMigration = async () => {
+const runSeed = async () => {
     try {
         const deleteResult = await User.remove({});
         const created = await User.create(exampleUsers);
@@ -67,4 +67,4 @@ const runMigration = async () => {
     }
 }
 
-runMigration();
+runSeed();
