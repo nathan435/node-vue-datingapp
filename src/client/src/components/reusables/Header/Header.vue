@@ -33,10 +33,10 @@
                     @shown="userPopoverShown"
                     :no-fade="true"
                     >
-                    <div @click="browseClick" :to="{ name: 'UsersBrowser'}" class="popover-item" ref="userPopoverBrowse" tabindex="0">Übersicht</div>
-                    <div @click="profileClick" :to="{ name: 'EditProfile'}" class="popover-item" ref="userPopoverProfile" tabindex="1">Profil</div>
-                    <div class="popover-item" tabindex="1">Chat</div>
-                    <div class="popover-item" tabindex="2">Ausloggen</div>
+                    <div @click="browseClick" class="popover-item" ref="userPopoverBrowse" tabindex="0">Übersicht</div>
+                    <div @click="profileClick" class="popover-item" ref="userPopoverProfile" tabindex="1">Profil</div>
+                    <div @click="chatClick" class="popover-item" tabindex="2">Chat</div>
+                    <div @click="logoutClick" class="popover-item" tabindex="3">Ausloggen</div>
                 </b-popover>
             </div>
         </b-container>
@@ -87,6 +87,12 @@ export default {
         },
         browseClick() {
             this.$router.push({ name: 'UsersBrowser'})
+        },
+        chatClick() {
+            this.openChat();
+        },
+        logoutClick() {
+            this.logOut();
         }
     }
 }
