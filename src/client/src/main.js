@@ -11,14 +11,17 @@ import './styles/bootstrap-4.0.0/scss/bootstrap.scss'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './styles/globals.scss'
 
-import socket from './api/realtime'
+import tryConnect from './api/realtime'
 
+import VueSocketio from 'vue-socket.io';
 
 import store from './store'
 import { log } from 'util';
 
 window.store = store;
 
+const socket = tryConnect();
+Vue.use(VueSocketio, socket, store);
 Vue.config.productionTip = false
 
 // init user

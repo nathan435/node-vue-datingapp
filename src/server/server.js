@@ -12,8 +12,17 @@ const {
 
 const app = require('./app');
 
+
+
+
+const { redisClient } = require('./redis');
+
+
+const { SECRET } = require('./config');
+
 const server = require('http').createServer(app);
 const io = require('./api/realtime')(server);
+global.socketIO = io;
 
 const { connectToDB } = require('./database');
 connectToDB(DB_USER, DB_PASSWORD);

@@ -10,16 +10,18 @@ const getters = {
 }
 
 const actions = {
-    openChat ({ commit, state }, user) {
+    openChat ({ commit, state }) {
         // if chat not open and able to open open the chat
-        let userId;
-        if (user) userId = user.id;
-        commit(types.OPEN_CHAT, userId);
+        commit(types.OPEN_CHAT);
     },
     closeChat ({ commit, state }) {
         // if chat open and able to close close the chat
         commit(types.CLOSE_CHAT);
-    }
+    },
+    selectChat ({ commit, state }, { chatId }) {
+        // if chat open and able to close close the chat
+        commit(types.SELECT_CHAT, { chatId });
+    },
 }
 
 const mutations = {

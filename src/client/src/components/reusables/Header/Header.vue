@@ -91,6 +91,7 @@ export default {
             this.openChat();
         },
         logoutClick() {
+            this.$root.$emit('bv::hide::popover');
             this.logOut();
         }
     }

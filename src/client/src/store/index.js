@@ -6,6 +6,8 @@ import getters from './global/getters'
 import user from './modules/user'
 import users from './modules/users'
 import ui from './modules/ui'
+import notifications from './modules/notifications'
+import chat from './modules/chat'
 
 Vue.use(Vuex);
 
@@ -18,7 +20,9 @@ export default new Vuex.Store({
     modules: {
         user,
         users,
-        ui
+        ui,
+        notifications,
+        chat
     },
     strict: debug
 })

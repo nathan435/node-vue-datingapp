@@ -5,7 +5,7 @@
             <b-img class="profile-image" fluid :src="profileOwner.profileImage" alt=""/>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque asperiores reiciendis ipsa, cumque quia ad mollitia dolorum eos corrupti enim quasi laboriosam sit tenetur laborum quae sunt quas, fugiat soluta.</p>
             <template v-if="!isPreviewMode">
-                <b-button variant="primary" @click="openChat(profileOwner)">Chat</b-button>
+                <b-button variant="primary" @click="startChat({ userId: profileOwner.id })">Chat</b-button>
                 <b-button v-if="isLikedUser" variant="outline-primary" @click="likeUser(profileOwner)">Dir gefällt {{profileOwner.username}}</b-button>
                 <b-button v-else variant="primary" @click="likeUser(profileOwner)">Like</b-button>
             </template>
@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         ...mapActions([
-            'openChat',
+            'startChat',
             'likeUser'
         ]),
         closeModal() {

@@ -41,6 +41,7 @@ const actions = {
     },
     logOut ({ commit, state }) {
         // inform api about logout
+        this._vm.$socket.emit('logout');
         commit(types.LOGOUT);
     },
     async uploadProfilePicture ({ commit, state }, imageFile) {
@@ -59,10 +60,19 @@ const actions = {
         const updateResult = await UserApi.updateOwnProfile(formData);
         const user = updateResult.data.user;
         commit(types.RECEIVE_AUTHENTICATED_USER, { user });
-    }
+    },
 }
 
 const mutations = {
+    SOCKET_CONNECT (state, data) {
+        console.log('connected', data);
+    },
+    SOCKET_NEW_MESSAGE (state, data) {
+        console.log('test')
+    },
+    SOCKET_NEW_NOTIFICATION (state, data) {
+        console.log('test')
+    },
     [types.RECEIVE_AUTHENTICATED_USER] (state, { user }) {
         state.account = user;
     },

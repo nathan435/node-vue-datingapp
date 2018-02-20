@@ -2,11 +2,12 @@
   <div class="chat-modal-content">
       <div class="chat-select">
         <h3>Chats</h3>
-        <div v-for="chat in chats"
+        <div v-for="chat in chatsRepresentation"
           class="chat-user clearfix"
           :class="{'selected': selectedChat === chat.user.id}"
+          v-if="chat.user"
           :key="chat.user.id"
-          @click="selectChat(chat)"
+          @click="selectChat({ chatId: chat.user.id })"
         >
               <img class="chat-user-image" :src="chat.user.profileImage">
               <div class="texts">
@@ -23,11 +24,11 @@
               </div>
         </div>
       </div>
-      <div class="chat" :class="{'empty': !lastMessage(currentChat)}" v-if="user">
+      <div class="chat" :class="{'empty': !lastMessage(currentChat)}" v-if="user && currentChat">
         <div class="messages" ref="messages">
-          <transition-group name="fade">
+          <transition-group name="fade" v-if="currentChat && currentChat.messages">
             <div class="message" v-for="message in currentChat.messages"
-              :key="message.id"
+              :key="message.id || message.temporaryId"
               :class="{'you': message.author === user.id, 'other': message.author !== user.id}"
             >
               <p>{{message.msg}}</p>
@@ -45,7 +46,7 @@
             spellcheck="false"
             class="message-input"
             v-model="msgInput"
-            @keydown.enter.native="submitMessage"
+            @keydown.enter.native="submitInput"
           />
       </div>
   </div>
@@ -60,25 +61,6 @@ moment.updateLocale('de', { relativeTime : { s: 'gerade eben'}});
 export default {
   data () {
     return {
-      chats: [
-        {
-          user: {
-            id: '923840',
-            username: 'Lisa',
-            profileImage: 'https://vignette.wikia.nocookie.net/camp-halfblood-roleplay/images/a/aa/A_Girl_With_Blonde_Hair_Blue_Eyes.jpg/revision/latest?cb=20130814205740'
-          },
-          messages: [{ id: '94829384234', author: '034850498339409', msg: 'Ja, das habe ich auch gedacht.', timestamp: 'Thu Feb 15 2018 13:20:07 GMT+0100 (CET)'}, { id: '73478324', author: '1', msg: 'Sind die nicht immer so?', timestamp: 'Thu Feb 15 2018 13:01:07 GMT+0100 (CET)'}]
-        },
-        {
-          user: {
-            id: '3478583475',
-            username: 'Anna',
-            profileImage: 'https://s3.envato.com/files/193435194/preview.jpg'
-          },
-          messages: []
-        }
-      ],
-      selectedChat: '923840',
       msgInput: ''
     }
   },
@@ -88,7 +70,7 @@ export default {
   watch: {
     'currentChat.messages': function() {
       const messagesEl = this.$refs.messages;
-      console.log(messagesEl);
+      if (!messagesEl) return;
       setTimeout(() => {
         messagesEl.scrollTop = messagesEl.scrollHeight - messagesEl.clientHeight;
       }, 0)
@@ -96,11 +78,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'submitMessage',
+      'selectChat'
+    ]),
     timestampToDate(timestamp) {
       return moment(timestamp).format('DD.MM.YYYY')
     },
     lastMessage(chat) {
-      if (!chat.messages || !chat.messages.length > 0) return null;
+      if (!chat || !chat.messages || !chat.messages.length > 0) return null;
       return chat.messages[chat.messages.length - 1];
     },
     lastMessageDate(chat) {
@@ -109,27 +95,51 @@ export default {
     lastMessageTimeFromNow(chat) {
       return moment(this.lastMessage(chat).timestamp).fromNow(true);
     },
-    selectChat(chat) {
-      this.selectedChat = chat.user.id;
-    },
-    submitMessage() {
+    submitInput() {
       // submit message vuex action
-      this.currentChat.messages.push({
-        author: '1',
+      const message = {
+        author: this.user.id,
         msg: this.msgInput,
-        timestamp: moment(),
-        id: Math.random()
-      })
+        timestamp: moment().format(),
+        temporaryId: Math.random()
+      };
+
+      console.log(message);
+
+      this.submitMessage({ message });
 
       this.msgInput = '';
     }
   },
   computed: {
     ...mapGetters([
-      'user'
+      'user',
+      'usersList',
+      'chats',
+      'selectedChat'
     ]),
     currentChat() {
-      return this.chats.find((chat => chat.user.id === this.selectedChat));
+      return this.chatsRepresentation.find((chat => chat.user && chat.user.id === this.selectedChat));
+    },
+    chatsRepresentation() {
+      let chatsRepresentation = [];
+      for (let chatId in this.chats) {
+        if (this.chats.hasOwnProperty(chatId)) {
+          //console.log('ccchat', this.chats[chatId])
+          this.usersList.forEach((user) => {
+            console.log('userid', user.id);
+          })
+
+          console.log('chatId', chatId);
+
+          chatsRepresentation.push({
+            user: this.usersList.find(u => u.id === this.chats[chatId].partner),
+            messages: this.chats[chatId].messages
+          })
+        }
+      }
+      console.log('chatsRepresentation', chatsRepresentation)
+      return chatsRepresentation;
     }
   }
 }

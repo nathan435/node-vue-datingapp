@@ -1,12 +1,24 @@
 import io from 'socket.io-client'
-const socket = io('http://localhost:3000');
+import Cookies from 'cookies-js'
 
-socket.on('connect', () => {
-    console.log('connected')
-})
 
-socket.on('test', () => {
-    console.log('test')
-})
 
-export default socket;
+const tryConnect = () => {
+    const token = Cookies.get('authToken');
+    const socket = io.connect('http://localhost:3000', {
+        'query': 'authToken=' + token
+    })
+
+    return socket;
+}
+
+// debugging
+window.tryConnect = tryConnect;
+
+//let socket = tryConnect();
+
+
+
+
+
+export default tryConnect;
