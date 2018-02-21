@@ -2,17 +2,17 @@
   <div class="chat-modal-content">
       <div class="chat-select">
         <h3>Chats</h3>
-        <div v-for="chat in chatsRepresentation"
+        <div v-for="chat in orderedChats"
           class="chat-user clearfix"
-          :class="{'selected': selectedChat === chat.user.id}"
-          v-if="chat.user"
-          :key="chat.user.id"
-          @click="selectChat({ chatId: chat.user.id })"
+          :class="{'selected': selectedChat === userForChat(chat).id}"
+          v-if="userForChat(chat)"
+          :key="chat.partner"
+          @click="selectChat({ chatId: userForChat(chat).id })"
         >
-              <img class="chat-user-image" :src="chat.user.profileImage">
+              <img class="chat-user-image" :src="userForChat(chat).profileImage">
               <div class="texts">
                 <div class="header clearfix">
-                  <p class="chat-user-name">{{chat.user.username}}</p>
+                  <p class="chat-user-name">{{userForChat(chat).username}}</p>
                   <p class="chat-date" v-if="lastMessage(chat)">
                     {{lastMessageTimeFromNow(chat)}}
                   </p>
@@ -38,7 +38,7 @@
         <transition name="fade">
           <div v-if="!lastMessage(currentChat)" class="no-messages">
             <h5>Ihr habt noch keine Unterhaltung.</h5>
-            <p>Schreib {{currentChat.user.username}} doch eine Nachricht :)</p>
+            <p>Schreib {{userForChat(currentChat).username}} doch eine Nachricht :)</p>
           </div>
         </transition>
         <b-form-input
@@ -109,6 +109,9 @@ export default {
       this.submitMessage({ message });
 
       this.msgInput = '';
+    },
+    userForChat(chat) {
+      return this.usersList.find(u => u.id === chat.partner);
     }
   },
   computed: {
@@ -116,30 +119,12 @@ export default {
       'user',
       'usersList',
       'chats',
+      'orderedChats',
       'selectedChat'
     ]),
     currentChat() {
-      return this.chatsRepresentation.find((chat => chat.user && chat.user.id === this.selectedChat));
-    },
-    chatsRepresentation() {
-      let chatsRepresentation = [];
-      for (let chatId in this.chats) {
-        if (this.chats.hasOwnProperty(chatId)) {
-          //console.log('ccchat', this.chats[chatId])
-          this.usersList.forEach((user) => {
-            console.log('userid', user.id);
-          })
-
-          console.log('chatId', chatId);
-
-          chatsRepresentation.push({
-            user: this.usersList.find(u => u.id === this.chats[chatId].partner),
-            messages: this.chats[chatId].messages
-          })
-        }
-      }
-      console.log('chatsRepresentation', chatsRepresentation)
-      return chatsRepresentation;
+      if (!this.selectedChat) return null;
+      return this.orderedChats.find((chat => this.userForChat(chat) && this.userForChat(chat).id === this.selectedChat));
     }
   }
 }

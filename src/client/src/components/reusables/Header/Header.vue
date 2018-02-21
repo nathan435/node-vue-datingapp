@@ -17,9 +17,9 @@
                     >
                     <div class="popover-item" ref="notificationsPopoverFirst" tabindex="0">Du gefällst Lena</div>
                 </b-popover>
-                <div class="messages">
+                <div class="messages" @click="messageNotificationsClick">
                     <img src="https://cdn1.iconfinder.com/data/icons/fs-icons-ubuntu-by-franksouza-dark/512/indicator-messages.png" alt="">
-                    <div class="amount">4</div>
+                    <div class="amount" v-if="unreadMessagesCount > 0">{{unreadMessagesCount}}</div>
                 </div>
                 <div class="user" id="user-popover" @click="popoverBeforeShow" :style="{'pointer-events': userPopoverIsShown ? 'none' : 'auto'}">
                     <img :src="user.profileImage" alt="">
@@ -49,7 +49,10 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     computed: {
         ...mapGetters([
-            'user'
+            'user',
+            'unreadMessagesCount',
+            'mostRecentUnreadChat',
+            'orderedChats'
         ]),
     },
     data() {
@@ -93,6 +96,9 @@ export default {
         logoutClick() {
             this.$root.$emit('bv::hide::popover');
             this.logOut();
+        },
+        messageNotificationsClick() {
+            // open most recent chat if there is one
         }
     }
 }
