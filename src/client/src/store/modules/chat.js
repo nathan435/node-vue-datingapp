@@ -30,17 +30,16 @@ const getters = {
         return chatsList;
     },
     selectedChat: state => state.selectedChat,
-    unreadMessagesCount: (state) => {
+    unreadMessagesCount: (state, getters, rootState) => {
         // loop through all chat objects
-        let count = 0;
-        for (let chatId in state.chats) {
-            if (state.chats.hasOwnProperty(chatId)) {
-                count += state.chats[chatId].messages.length;
-            }
-        }
-        // count the number of unread messages
+        // count the number of unread messages in all chats
+        return getters.orderedChats.reduce((count, chat) => {
+            return count + chat.messages.reduce((subcount, message) => {
+                if (message.read || message.author === rootState.user.account.id) return subcount;
+                return subcount + 1;
+            }, 0)
+        }, 0)
 
-        return count;
     },
     mostRecentUnreadChat: (state) => {
         // find most recent unread chat
@@ -50,7 +49,6 @@ const getters = {
 
 const actions = {
     submitMessage ({ commit, state }, { message }) {
-        console.log('chatIdBeforeEmit', state.selectedChat);
         this._vm.$socket.emit('message', { message, chatId: state.selectedChat });
         commit(types.NEW_MESSAGE, { message })
         // emit new message to server
@@ -65,9 +63,6 @@ const actions = {
 
         commit (types.OPEN_CHAT);
         commit (types.SELECT_CHAT, { chatId: userId });
-
-        // emit io event to send that all msgs from this chat were read
-        this._vm.$socket.emit('chat_read', { chatId: state.selectedChat });
     }
 }
 
@@ -81,7 +76,11 @@ const mutations = {
             }
         })
     },
-    SOCKET_NEW_MESSAGE: (state, data) => {
+    SOCKET_UPDATE_CHAT_READS (state, data) {
+        const chat = data[0];
+        state.chats[chat.partner] = chat;
+    },
+    SOCKET_NEW_MESSAGE (state, data) {
         state.chats = {...state.chats};
         const { chatId, message } = data[0];
 
@@ -119,6 +118,9 @@ const mutations = {
                 state.chats[chatId].new = false;
             }
         }
+        // emit io event to send that all msgs from this chat were read
+        this._vm.$socket.emit('chat_read', { chatId });
+
         state.selectedChat = chatId;
     }
 }

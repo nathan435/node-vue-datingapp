@@ -40,9 +40,13 @@ module.exports = (server) => {
             chatController.newChatMessage(socket.tokenPayload.id, chatId, msgObject.message);
         })
 
-        socket.on('chat_read', ({ chatId }) => {
+        socket.on('chat_read', async ({ chatId }) => {
             // update all msgs in chat as read in mongodb chat document
             //
+            const userId = socket.tokenPayload.id;
+            const { isUpdate, chat } = await chatController.userReadChat(userId, chatId);
+            console.log('isupdate', isUpdate);
+            if (isUpdate) chatPub.publish('chat_read', JSON.stringify(chat));
         })
     })
 

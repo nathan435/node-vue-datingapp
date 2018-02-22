@@ -66,14 +66,28 @@ const userReadChat = async (userId, chatId) => {
         // find the chat with userId and chatId (organised in frontend this way) as second user
         const chat = await findChatWith(userId, chatId);
         if (!chat) throw new Error();
-
-        chat.messages.forEach((message) => {
-            if (message.author === userId) message.read = true;
+        let isUpdate = false;
+        chat.messages.forEach((message, index) => {
+            if (message.author.toString() === chatId && !message.read) {
+                message.read = true;
+                isUpdate = true;
+            }
         })
-
-        const updatedChat = chat.save();
-
+        chat.markModified('messages');
+        if (isUpdate) {
+            const updatedChat = await chat.save();
+            return {
+                isUpdate,
+                chat: updatedChat
+            }
+        } else {
+            return {
+                isUpdate,
+                chat
+            }
+        }
     } catch (e) {
+        console.log(e);
         return e;
     }
 }
@@ -87,7 +101,6 @@ const newChatMessage = async (userId, partnerId, message) => {
         if (!chat) chat = await createChatFor(userId, partnerId);
         chat.messages.push(message);
         const updatedChat = await chat.save();
-        console.log('saved chat message', updatedChat);
     } catch (e) {
         console.log(e);
         return e;
