@@ -64,7 +64,8 @@ export default {
     methods: {
         ...mapActions([
             'logOut',
-            'openChat'
+            'openChat',
+            'startChat'
         ]),
         popoverBeforeShow() {
             this.$root.$emit('bv::hide::popover');
@@ -99,6 +100,9 @@ export default {
         },
         messageNotificationsClick() {
             // open most recent chat if there is one
+            if (this.mostRecentUnreadChat) {
+                this.startChat({ userId: this.mostRecentUnreadChat })
+            }
         }
     }
 }

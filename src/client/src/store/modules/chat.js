@@ -41,9 +41,11 @@ const getters = {
         }, 0)
 
     },
-    mostRecentUnreadChat: (state) => {
+    mostRecentUnreadChat: (state, getters, rootState) => {
         // find most recent unread chat
-
+        const chat = getters.orderedChats.find(chat => chat.messages.find(message => message.author !== rootState.user.account.id && !message.read));
+        if (chat) return chat.partner;
+        return null;
     }
 }
 
