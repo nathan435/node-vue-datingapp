@@ -29,8 +29,6 @@ const tryLogin = async (data) => {
         };
 
     } catch (e) {
-        console.log('ERRORORORORO')
-        console.log(e);
         return e;
     }
 }

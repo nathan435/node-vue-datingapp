@@ -1,10 +1,17 @@
 const cloudinary = require('cloudinary');
 const uuidv4 = require('uuid/v4');
 
+const {
+    CLOUDINARY_BASE_URL,
+    CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET
+} = process.env;
+
 cloudinary.config({ 
-    cloud_name: 'dh54dr3k9', 
-    api_key: '328617644829868', 
-    api_secret: 'zdfCEhoDwd2VOJt8_RpuPtOSRuE' 
+    cloud_name: CLOUDINARY_CLOUD_NAME, 
+    api_key: CLOUDINARY_API_KEY, 
+    api_secret: CLOUDINARY_API_SECRET 
 });
 
 const baseUploadConfig = {
@@ -29,7 +36,7 @@ const uploadImage = async (img, name) => {
         }
     );
 
-    console.log(uploadResult);
+    return uploadResult;
 }
 
 const cloudinaryUploadProfileImage = async (img, userId) => {
@@ -69,7 +76,7 @@ const cloudinaryGetUserGalleryImages = async (userId) => {
 }
 
 const cloudinaryGetUserProfileImagePath = (userId) => {
-    return `https://res.cloudinary.com/dh54dr3k9/image/upload/v1517952820/DatingApp/profiles/${userId}/${userId}_profile`;
+    return `${CLOUDINARY_BASE_URL}/profiles/${userId}/${userId}_profile`;
 }
 
 const cloudinaryDeleteImageById = async (imageId) => {

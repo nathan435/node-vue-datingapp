@@ -24,7 +24,6 @@ module.exports = (server) => {
 
 
         socket.on('logout', (data) => {
-            console.log('someone logged out')
             console.log(data);
             socket.disconnect();
         })
@@ -42,7 +41,6 @@ module.exports = (server) => {
 
         socket.on('chat_read', async ({ chatId }) => {
             // update all msgs in chat as read in mongodb chat document
-            //
             const userId = socket.tokenPayload.id;
             const { isUpdate, chat } = await chatController.userReadChat(userId, chatId);
             console.log('isupdate', isUpdate);

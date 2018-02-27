@@ -17,10 +17,6 @@ const createUser = async (data) => {
     
 }
 
-const updateUser = async (data) => {
-
-}
-
 const hardDeleteUser = async (data) => {
     const {
         userID
@@ -261,7 +257,6 @@ module.exports = {
     getUserByID,
     getUserByEmail,
     createUser,
-    updateUser,
     updateUserProfile,
     softDeleteUser,
     userLikeUser,
